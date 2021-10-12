@@ -22,13 +22,14 @@ cd /work/k8s
 for F in $(ls *.yaml); do kubectl create -f $F; done
 
 
+gcloud config set compute/zone us-east1-b
+
+gcloud compute instances create kraken-admin --network-interface="subnet=kraken-mgmt-subnet" --network-interface="subnet=kraken-prod-subnet"
+
 Task 2
 
 ## In SSH
 
-gcloud config set compute/zone us-east1-b
-
-gcloud compute instances create kraken-admin --network-interface="subnet=kraken-mgmt-subnet" --network-interface="subnet=kraken-prod-subnet"
 
 
 ## Open monitoring
@@ -39,6 +40,7 @@ gcloud compute instances create kraken-admin --network-interface="subnet=kraken-
    Metric : CPU utilization
    Filter : instance_name
             Value : kraken-admin
+            Alert Name: kraken-admin
    Condition : is above
    Threshold : 50%
    For : 1 minute
