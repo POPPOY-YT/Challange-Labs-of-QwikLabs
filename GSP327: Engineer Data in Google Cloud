@@ -54,3 +54,15 @@ CREATE OR REPLACE TABLE taxirides.2015_fare_amount_predictions
 SELECT * FROM ML.PREDICT(MODEL taxirides.fare_model,(
   SELECT * FROM taxirides.report_prediction_data)
 )
+
+
+––––––––––––––––––––––––––––––––––––––––
+L-I-K-E ► S-H-A-R-E ► S-U-B-S-C-R-I-B-E
+––––––––––––––––––––––––––––––––––––––––
+✪ Subscribe This Channel and Share: 💬
+👉 Subscribe : https://www.youtube.com/c/POPPOY
+–––––––––––––––––––––––––––––––––––––––––––––––––––
+
+
+Please Like, Share, and subscribe our channel to Support us and 
+please Press the 🔔 (bell) icon for Notifications of Our Latest videos.:)
