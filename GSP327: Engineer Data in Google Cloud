@@ -43,8 +43,12 @@ OPTIONS(input_label_cols=['fare_amount'], model_type='linear_reg')
 AS
 
 SELECT * FROM taxirides.taxi_training_data
-SQL
-Task - 3: Perform a batch prediction on new data
+
+
+
+Task 3: 
+
+
 CREATE OR REPLACE TABLE taxirides.2015_fare_amount_predictions
   AS
 SELECT * FROM ML.PREDICT(MODEL taxirides.fare_model,(
