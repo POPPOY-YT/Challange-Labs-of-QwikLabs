@@ -42,6 +42,12 @@ gcloud compute instances add-tags juice-shop --tags=allow-ssh-internal-ingress-q
 
 
 
+TASK 6 : SSH to bastion host via IAP and juice-shop via bastion
+
+
+ssh [Internal IP address of juice-shop]
+
+
 ––––––––––––––––––––––––––––––––––––––––
 L-I-K-E ► S-H-A-R-E ► S-U-B-S-C-R-I-B-E
 ––––––––––––––––––––––––––––––––––––––––
