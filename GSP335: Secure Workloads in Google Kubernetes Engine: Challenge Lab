@@ -1,26 +1,32 @@
-Task 1
 
-gcloud container clusters create kraken-cluster \
+
+Task 1: Setup Cluster
+gsutil cp gs://spls/gsp335/gsp335.zip .
+unzip gsp335.zip
+search kubernetes engine and open in seprate tab similarly search sql
+
+gcloud container clusters create security-demo-cluster613 \
    --zone us-central1-c \
    --machine-type n1-standard-4 \
    --num-nodes 2 \
    --enable-network-policy
 
-gcloud sql instances create kraken-cloud-sql --region us-central1
+gcloud sql instances create wordpress-db-449 --region us-central1
 
+refresh both new windows and check the work and wait until you get green check mark
 ************************************************************************
-Task 2
+Task 2: Setup wordpress
 Create database - wordpress
 Add user - wordpress (no password)
 
 Service account
-gcloud iam service-accounts create kraken-wordpress-sa
+gcloud iam service-accounts create sa-wordpress-912
 
 gcloud projects add-iam-policy-binding $DEVSHELL_PROJECT_ID \
-   --member="serviceAccount:kraken-wordpress-sa@$DEVSHELL_PROJECT_ID.iam.gserviceaccount.com" \
+   --member="serviceAccount:sa-wordpress-912@$DEVSHELL_PROJECT_ID.iam.gserviceaccount.com" \
    --role="roles/cloudsql.client"
 
-gcloud iam service-accounts keys create key.json --iam-account=kraken-wordpress-sa@$DEVSHELL_PROJECT_ID.iam.gserviceaccount.com
+gcloud iam service-accounts keys create key.json --iam-account=sa-wordpress-912@$DEVSHELL_PROJECT_ID.iam.gserviceaccount.com
 
 kubectl create secret generic cloudsql-instance-credentials --from-file key.json
 
@@ -28,13 +34,17 @@ kubectl create secret generic cloudsql-db-credentials \
    --from-literal username=wordpress \
    --from-literal password=''
 
+Create the WordPress deployment and service
+
+kubectl create -f volume.yaml
+
 goto editor and reolace isntance name with sql instance name 
 save 
 
 kubectl apply -f wordpress.yaml
 
 ************************************************************************
-Task 3
+Task 3: Setup Ingress with TLS
 helm version
 
 helm repo add stable https://charts.helm.sh/stable
@@ -46,8 +56,9 @@ kubectl get service
 
 . add_ip.sh  
 
+student0300fdd647df7f.labdns.xyz (save it for latter use for host name)
 
-kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.2.0/cert-manager.yaml
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.16.0/cert-manager.yaml
 
 kubectl create clusterrolebinding cluster-admin-binding \
    --clusterrole=cluster-admin \
@@ -59,10 +70,10 @@ kubectl apply -f issuer.yaml
 
 goto editor and edit ingress.yaml to include dns address received as output from . add_ip.sh
 
-kubectl apply -f ingress.yaml'
+kubectl apply -f ingress.yaml
 
 ************************************************************************
-Task 4
+Task 4: Set up Network Policy
 goto editor and in network-policy.yaml add to end
 ---
 apiVersion: networking.k8s.io/v1
@@ -81,9 +92,8 @@ spec:
 
 kubectl apply -f network-policy.yaml
 ************************************************************************
-Task 5 
-
-goto security - Binary authorisatioin
+Task 5: Setup Binary Authorization
+goto security - Binary authorisatioin enableit and click on edit policy under specific rule select gke rule
 - configure policy 
 - disallow all images
 - create specific rules, select cluster
