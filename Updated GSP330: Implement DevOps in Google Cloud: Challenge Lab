@@ -22,14 +22,14 @@ kubectl apply -f k8s/canary -n production
 kubectl apply -f k8s/services -n production
 
 kubectl get svc
-kubectl get service gceme-frontend -n production
+kubectl get service gceme-frontend -n production    //Check the IP in a new browser window, you will notice the color and the version of the app if associated with version 1.0.0.
 
 
 git init
 git config credential.helper gcloud.sh
 git remote add origin https://source.developers.google.com/p/$DEVSHELL_PROJECT_ID/r/sample-app
-git config --global user.email "[EMAIL]@qwiklabs.net"
-git config --global user.name "student [NAME]"
+git config git config --global user.email "[EMAIL_ADDRESS]"
+git config --global user.name "[USERNAME]"
 git add .
 git commit -m "initial commit"
 git push origin master
@@ -81,9 +81,16 @@ git push origin new-feature
 
 #BACK TO CLOUD SHELL, RUN:
 curl http://localhost:8001/api/v1/namespaces/new-feature/services/gceme-frontend:80/proxy/version
-kubectl get service gceme-frontend -n production  
-git checkout -b canary
-git push origin canary
+kubectl get service gceme-frontend -n production 
+
+while true; do curl http://$FRONTEND_SERVICE_IP/version; sleep 1; done
+// end the command with Ctrl + C.
+
+git checkout canary
+git merge canary                       //Wait for 1-2 mins
+git push origin canary                //Wait for 1-2 mins and you will see the master branch. 
+
+
 export FRONTEND_SERVICE_IP=$(kubectl get -o \
 jsonpath="{.status.loadBalancer.ingress[0].ip}" --namespace=production services gceme-frontend)
 git checkout master
