@@ -4,10 +4,8 @@ Build a Docker Image of Sample Application
 gsutil cp gs://sureskills-ql/challenge-labs/ch04-kubernetes-app-deployment/echo-web.tar.gz .
 gsutil cp gs://$DEVSHELL_PROJECT_ID/echo-web.tar.gz .
 tar -xvf echo-web.tar.gz
+gcloud builds submit --tag gcr.io/$DEVSHELL_PROJECT_ID/echo-app:v1 .
 
-docker build -t echo-app:v1 .
-docker tag echo-app:v1 gcr.io/${PROJECT_ID}/echo-app:v1
-docker push gcr.io/${PROJECT_ID}/echo-app:v1   #### Replace $DEVSHELL_PROJECT_ID with your GCP Project ID.
 
 1.Create a Kubernetes Cluster
 gcloud container clusters create echo-cluster --num-nodes 2 --zone us-central1-a --machine-type n1-standard-2
