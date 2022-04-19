@@ -11,11 +11,11 @@ gcloud builds submit --tag gcr.io/$DEVSHELL_PROJECT_ID/echo-app:v1 .
 gcloud container clusters create echo-cluster --num-nodes 2 --zone us-central1-a --machine-type n1-standard-2
 
 2.Push the image to the Google Container Registry
-kubectl run  echo-web \--image=gcr.io/[id-project]/echo-app:v1 \--port=8000
+kubectl run  echo-web --image=gcr.io/qwiklab-resources/echo-app:v1 
 
 3.Deploy the application to the Kubernetes Cluster
 
-kubectl expose deployment echo-app --name echo-web --type="LoadBalancer" --type LoadBalancer --port 80 --target-port 8000
+kubectl expose deployment echo-web --type=LoadBalancer --port 80 --target-port=8000
 
 kubectl get service echo-web
 #### Copy and open the IP address of the external endpoints in a new tab of your browser, the sample application should look like
