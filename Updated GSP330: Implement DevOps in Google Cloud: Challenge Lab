@@ -78,6 +78,8 @@ git commit -m "Version 2.0.0"
 git push origin new-feature
 # CHEK YOUR JENKINS DASHBOARD
 
+kubectl proxy &
+// end the command with Ctrl + C
 
 #BACK TO CLOUD SHELL, RUN:
 curl http://localhost:8001/api/v1/namespaces/new-feature/services/gceme-frontend:80/proxy/version
