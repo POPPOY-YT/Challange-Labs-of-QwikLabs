@@ -2,23 +2,23 @@ Build a Docker Image of Sample Application
 #####Go to Cloud shell and write commands.
 
 gsutil cp gs://sureskills-ql/challenge-labs/ch04-kubernetes-app-deployment/echo-web.tar.gz .
-gsutil cp gs://$DEVSHELL_PROJECT_ID/echo-web.tar.gz .
+
 tar -xvf echo-web.tar.gz
+
 gcloud builds submit --tag gcr.io/$DEVSHELL_PROJECT_ID/echo-app:v1 .
+
 
 
 1.Create a Kubernetes Cluster
 gcloud container clusters create echo-cluster --num-nodes 2 --zone us-central1-a --machine-type n1-standard-2
 
 2.Push the image to the Google Container Registry
-kubectl run  echo-web --image=gcr.io/qwiklab-resources/echo-app:v1 
+kubectl create deployment echo-web --image=gcr.io/qwiklabs-resources/echo-app:v1
 
 3.Deploy the application to the Kubernetes Cluster
+kubectl expose deployment echo-web --type=LoadBalancer --port=80 --target-port=8000
 
-kubectl expose deployment echo-web --type=LoadBalancer --port 80 --target-port=8000
-
-kubectl get service echo-web
-#### Copy and open the IP address of the external endpoints in a new tab of your browser, the sample application should look like
+kubectl get svc
 
 
 
