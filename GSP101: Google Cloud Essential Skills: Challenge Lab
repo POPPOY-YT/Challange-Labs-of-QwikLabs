@@ -3,8 +3,8 @@ Create a Compute Engine instance, add necessary firewall rules
 
 #### Goto Compute Engine -> VM Instannces -> Create Instance.
 
-   Name : apache
-   Zone : us-central1-a
+   Name : ## Instance Name should be change at ur lab 
+   Zone : ## Compute zone should be change at ur lab 
    Series : N1
    Boot Disk : Linux 9 (stretch)
 
